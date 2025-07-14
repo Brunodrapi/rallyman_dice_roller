@@ -19,6 +19,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 2vw;
     /* margin: 20px 0; */
 }
 
@@ -61,7 +62,7 @@ body {
 .action-buttons {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 2vw;
    /*  margin-top: 20px; */
 }
 
@@ -130,7 +131,7 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     width: 90%;
-   /*  margin: 2vh 0; */
+   margin: 2vh 0;
 }
 
 /* .die {
