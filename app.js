@@ -15,7 +15,7 @@ function addDie(type) {
         die.value = type;
     } else {
         switch(type) {
-            case 'frein': die.value = 'Frein'; break;
+            case 'frein': die.value = 'Brake'; break;
             case 'boost': die.value = 'Boost'; break;
             case 'leader': die.value = 'Leader'; break;
             case 'gaz': die.value = 'Gaz'; break;

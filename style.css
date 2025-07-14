@@ -84,3 +84,37 @@ body {
 .dice-selector button.black-button {
     font-family: 'DS-DIGI', monospace;
 }
+
+@media (max-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+
+    .dice-selector button, #flatout-button, #reset-button {
+        font-size: 20px;
+        padding: 15px 20px;
+    }
+
+    .die {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+
+    .dice-selector button, #flatout-button, #reset-button {
+        font-size: 24px;
+        padding: 20px 30px;
+    }
+
+    .die {
+        width: 90px;
+        height: 90px;
+        font-size: 32px;
+    }
+}
