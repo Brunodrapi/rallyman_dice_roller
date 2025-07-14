@@ -27,6 +27,12 @@ function addDie(type) {
     renderDice();
 }
 
+const diceSound = new Audio('sounds/dice-roll.mp3');
+
+function playDiceSound() {
+    diceSound.currentTime = 0; // Remet au début pour rejouer rapidement
+    diceSound.play();}
+
 /* function adjustDiceSize() {
     const totalDice = dice.length;
     let sizePercent = 15;
@@ -98,6 +104,7 @@ function renderDice() {
         dieDiv.onclick = () => {
             rollDie(die);
             renderDice();
+            playDiceSound();
         };
         diceArea.appendChild(dieDiv);
         /* adjustDiceSize(); */
@@ -107,6 +114,7 @@ function renderDice() {
 function rollAllDice() {
     dice.forEach(rollDie);
     renderDice();
+    playDiceSound();
 }
 
 function resetDice() {
