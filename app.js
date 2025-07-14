@@ -57,10 +57,10 @@ function rollDie(die) {
     let result = '';
 
     if (['1','2','3'].includes(die.type)) {
-        const faces = [die.type, '', '', '', '', '⚠️'];
+        const faces = [die.type, die.type, die.type, die.type, die.type, '⚠️'];
         result = faces[Math.floor(Math.random() * 6)];
     } else if (['4','5','6'].includes(die.type)) {
-        const faces = [die.type, '', '', '', '⚠️', '⚠️'];
+        const faces = [die.type, die.type, die.type, die.type, '⚠️', '⚠️'];
         result = faces[Math.floor(Math.random() * 6)];
     } else if (die.type === 'gaz' || die.type === 'boost') {
         const faces = ['', '', '', '', '', '⚠️'];
