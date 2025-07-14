@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rallyman Dice Roller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>🎲 Rallyman Dice Roller 🎲</h1>
+
+    <p><strong>Select dice to launch :</strong></p>
+    <div class="dice-selector">
+        <button class="black-button" data-value="1" onclick="addDie('1')">+1</button>
+        <button class="black-button" data-value="2" onclick="addDie('2')">+2</button>
+        <button class="black-button" data-value="3" onclick="addDie('3')">+3</button>
+        <button class="black-button" data-value="4" onclick="addDie('4')">+4</button>
+        <button class="black-button" data-value="5" onclick="addDie('5')">+5</button>
+        <button class="black-button" data-value="6" onclick="addDie('6')">+6</button>
+        <button class="red-button" onclick="addDie('frein')">+Frein</button>
+        <button class="green-button" onclick="addDie('boost')">+Boost</button>
+        <button class="orange-button" onclick="addDie('leader')">+Leader</button>
+        <button class="white-button" onclick="addDie('gaz')">+Gaz</button>
+    </div>
+
+    <p><strong>Dice selected :</strong></p>
+    <div id="dice-area"></div>
+
+    <div class="action-buttons">
+        <button id="flatout-button" onclick="rollAllDice()">Flat Out! 🎲</button>
+        <button id="reset-button" onclick="resetDice()">Reset 🔄</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
