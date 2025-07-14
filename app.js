@@ -4,52 +4,112 @@ const dice = [];
 
 function addDie(type) {
     if (['1','2','3','4','5','6'].includes(type)) {
-        if (dice.some(d => d.type === type)) return;
+        if (dice.some(d => d.type === type)) {
+            return; // Déjà ajouté
+        }
     }
+
     const die = { type: type, value: '' };
-    die.value = ['1','2','3','4','5','6'].includes(type) ? type :
-        type === 'frein' ? 'Brake' :
-        type === 'boost' ? 'Boost' :
-        type === 'leader' ? 'Leader' :
-        type === 'gaz' ? 'Gaz' : '?';
+
+    if (['1','2','3','4','5','6'].includes(type)) {
+        die.value = type;
+    } else {
+        switch(type) {
+            case 'frein': die.value = 'Brake'; break;
+            case 'boost': die.value = 'Boost'; break;
+            case 'leader': die.value = 'Leader'; break;
+            case 'gaz': die.value = 'Gaz'; break;
+            default: die.value = '?';
+        }
+    }
 
     dice.push(die);
     renderDice();
 }
 
+/* function adjustDiceSize() {
+    const totalDice = dice.length;
+    let sizePercent = 15;
+
+    if (totalDice >= 20) {
+        sizePercent = 6;
+    } else if (totalDice >= 15) {
+        sizePercent = 8;
+    } else if (totalDice >= 10) {
+        sizePercent = 10;
+    }
+
+    document.querySelectorAll('.die').forEach(die => {
+        die.style.width = sizePercent + 'vw';
+        die.style.height = sizePercent + 'vw';
+        die.style.fontSize = (sizePercent * 0.4) + 'vw';  // Texte toujours proportionnel
+
+        die.style.display = 'flex';
+        die.style.justifyContent = 'center';
+        die.style.alignItems = 'center';
+        die.style.overflow = 'hidden';
+        die.style.whiteSpace = 'nowrap';
+        die.style.textOverflow = 'ellipsis';
+    });
+} */
+
 function rollDie(die) {
     let result = '';
+
     if (['1','2','3'].includes(die.type)) {
-        result = ['' , '' , '' , '' , '' , '⚠️'][Math.floor(Math.random() * 6)] || die.type;
+        const faces = [die.type, '', '', '', '', '⚠️'];
+        result = faces[Math.floor(Math.random() * 6)];
     } else if (['4','5','6'].includes(die.type)) {
-        result = ['' , '' , '' , '⚠️' , '⚠️' , die.type][Math.floor(Math.random() * 6)];
+        const faces = [die.type, '', '', '', '⚠️', '⚠️'];
+        result = faces[Math.floor(Math.random() * 6)];
+    } else if (die.type === 'gaz' || die.type === 'boost') {
+        const faces = ['', '', '', '', '', '⚠️'];
+        result = faces[Math.floor(Math.random() * 6)];
+    } else if (die.type === 'frein' || die.type === 'leader') {
+        const faces = ['', '', '', '', '⚠️', '⚠️'];
+        result = faces[Math.floor(Math.random() * 6)];
     } else {
-        result = ['', '', '', '', '', '⚠️'][Math.floor(Math.random() * 6)];
+        result = '?';
     }
-    die.value = result || die.type;
+
+    die.value = result === '' ? '' : result;
 }
 
 function renderDice() {
     diceArea.innerHTML = '';
-    dice.forEach(die => {
+    dice.forEach((die, index) => {
         const dieDiv = document.createElement('div');
         dieDiv.className = 'die';
         dieDiv.innerText = die.value;
+
         if (['1','2','3','4','5','6'].includes(die.type)) {
             dieDiv.classList.add('black-die');
             dieDiv.setAttribute('data-value', die.value);
-        } else {
-            dieDiv.classList.add(
-                die.type === 'frein' ? 'red-die' :
-                die.type === 'boost' ? 'green-die' :
-                die.type === 'leader' ? 'orange-die' :
-                die.type === 'gaz' ? 'white-die' : ''
-            );
+        } else if (die.type === 'frein') {
+            dieDiv.classList.add('red-die');
+        } else if (die.type === 'boost') {
+            dieDiv.classList.add('green-die');
+        } else if (die.type === 'gaz') {
+            dieDiv.classList.add('white-die');
+        } else if (die.type === 'leader') {
+            dieDiv.classList.add('orange-die');
         }
-        dieDiv.onclick = () => { rollDie(die); renderDice(); };
+
+        dieDiv.onclick = () => {
+            rollDie(die);
+            renderDice();
+        };
         diceArea.appendChild(dieDiv);
+        /* adjustDiceSize(); */
     });
 }
 
-function rollAllDice() { dice.forEach(rollDie); renderDice(); }
-function resetDice() { dice.length = 0; renderDice(); }
+function rollAllDice() {
+    dice.forEach(rollDie);
+    renderDice();
+}
+
+function resetDice() {
+    dice.length = 0;
+    renderDice();
+}
