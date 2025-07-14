@@ -30,8 +30,12 @@ function addDie(type) {
 const diceSound = new Audio('sounds/dice-roll.mp3');
 
 function playDiceSound() {
-    diceSound.currentTime = 0; // Remet au début pour rejouer rapidement
-    diceSound.play();}
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle && soundToggle.checked) {
+        diceSound.currentTime = 0; // Remet au début pour rejouer rapidement
+        diceSound.play();
+    }
+}
 
 /* function adjustDiceSize() {
     const totalDice = dice.length;

@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>🎲 Rallyman Dice Roller 🎲</h1>
+    <h1>
+        <img src="imagegauche.png" alt="Image Gauche" class="titre-img gauche" />
+        <span>🎲 Rallyman Dice Roller 🎲</span>
+        <img src="imagedroite.png" alt="Image Droite" class="titre-img droite" />
+    </h1>
 
     <p><strong>Select dice to launch :</strong></p>
     <div class="dice-selector">
@@ -23,14 +27,22 @@
         <button class="white-button" onclick="addDie('gaz')">Gaz</button>
     </div>
 
-    <p><strong>Dice selected :</strong></p>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1em; margin-bottom: 0.5em;">
+        <strong>Dice selected :</strong>
+        <label style="font-weight: normal;">
+            <input type="checkbox" id="sound-toggle" checked>
+            🔊 Son activé
+        </label>
+    </div>
     <div id="dice-area"></div>
 
     <div class="action-buttons">
-        <button id="flatout-button" onclick="rollAllDice()">Flat Out! 🎲</button>
+        <button id="flatout-button" onclick="rollAllDice()">Flat Out! 🔥</button>
         <button id="reset-button" onclick="resetDice()">Reset 🔄</button>
     </div>
 
     <script src="app.js"></script>
+    <p><strong></strong></p>
+    <p><strong>app developped by <a href="https://boardgamegeek.com/user/apiiii">dr.apiiii</a> for <a href="https://www.bouvier-international.com/index.php/rallyman">Rallyman GT & Rallyman Dirt</a> by JC. BOUVIER</strong></p>
 </body>
 </html>
