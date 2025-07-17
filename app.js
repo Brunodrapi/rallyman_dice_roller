@@ -125,3 +125,11 @@ function resetDice() {
     dice.length = 0;
     renderDice();
 }
+
+// Enlève le dernier dé posé
+function removeLastDie() {
+    if (dice.length > 0) {
+        dice.pop();
+        renderDice();
+    }
+}
