@@ -200,7 +200,7 @@ h1 span {
 @media (min-width: 768px) {
     .dice-selector button, #flatout-button, #reset-button {
         font-size: 5vw;
-        padding: 3vw 4vw;
+        padding: 1vw 2vw;
         font-weight: bold;
         min-width: 15vw;
         flex: 1 1 15%;

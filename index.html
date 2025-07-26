@@ -14,8 +14,9 @@
         <span>🎲 Rallyman Dice Roller 🎲</span>
         <img src="imagedroite.png" alt="Image Droite" class="titre-img droite" />
     </h1>
-
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1em; margin-bottom: 1em; margin-top: 1em;"></div>
     <p><strong>Select dice to launch :</strong></p>
+    </div>
     <div class="dice-selector">
         <button class="black-button" data-value="1" onclick="addDie('1')">1</button>
         <button class="black-button" data-value="2" onclick="addDie('2')">2</button>
@@ -28,23 +29,23 @@
         <button class="orange-button" onclick="addDie('leader')">Leader</button>
         <button class="white-button" onclick="addDie('gaz')">Gaz</button>
     </div>
-    <div style="display: flex; align-items: center; justify-content: center; gap: 1em; margin-bottom: 1em;margin-top: 1em;">
-        <strong>Dice selected :</strong>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1em; margin-bottom: 1em; margin-top: 1em;">
+       
         <label style="font-weight: normal;">
-            <input type="checkbox" id="sound-toggle" checked>
-            🔊 Sound activated
-        </label>
+            <input type="checkbox" id="sound-toggle" checked> 🔊 |
+        </label> 
+        <strong>Dice selected :</strong>
     </div>
     <div id="dice-area"></div>
 
     <div class="action-buttons">
-        <button id="flatout-button" onclick="rollAllDice()">Flat Out! 🔥</button>
+        <button id="flatout-button" onclick="rollAllDice()">Flat Out!🔥</button>
         <button id="remove-last-die-button" onclick="removeLastDie()">⬅️</button>
         <button id="reset-button" onclick="resetDice()">Reset 🔄</button>
     </div>
 
     <div style="text-align:center; margin: 1em 0;">
-<button id="toggle-probabilities-btn" class="action-button" onclick="toggleProbabilities()">LOS probabilities</button>
+<button id="toggle-probabilities-btn" class="action-button" onclick="toggleProbabilities()">⚠️ LOC probabilities ⚠️</button>
     </div>
 <div id="probabilities-section" style="display:none; text-align:center; margin-bottom:1em;">
 <div id="prob-1-danger" class="prob-value">1 ⚠️ : -- %</div>

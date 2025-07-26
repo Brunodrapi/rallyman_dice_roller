@@ -149,10 +149,20 @@ function rollDie(die) {
 
 function renderDice() {
     diceArea.innerHTML = '';
+
     dice.forEach((die, index) => {
         const dieDiv = document.createElement('div');
+        let displayValue = die.value;
+
+        // Toujours abréger pour l'affichage dans les dés sélectionnés
+        if (displayValue === 'Brake') displayValue = 'BRK';
+        else if (displayValue === 'Boost') displayValue = 'BST';
+        else if (displayValue === 'Leader') displayValue = 'LDR';
+        else if (displayValue === 'Gaz') displayValue = 'GAZ';
+        // "Gaz" reste "Gaz" (ou "GAZ" si tu veux tout en majuscules)
+
         dieDiv.className = 'die';
-        dieDiv.innerText = die.value;
+        dieDiv.innerText = displayValue;
 
         if (['1','2','3','4','5','6'].includes(die.type)) {
             dieDiv.classList.add('black-die');
