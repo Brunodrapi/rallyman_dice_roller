@@ -71,6 +71,8 @@ body {
     padding: 15px 25px;
 }
 
+
+
 .dice-selector button.black-button[data-value="1"] { color: #006400; }  /* Vert foncé */
 .dice-selector button.black-button[data-value="2"] { color: #66FF66; }  /* Vert clair */
 .dice-selector button.black-button[data-value="3"] { color: #FFD700; }  /* Jaune */
@@ -191,12 +193,22 @@ h1 span {
     justify-content: space-around;
 /*     margin-bottom: 2vh; */
 }
-
+#toggle-probabilities-btn {
+    font-size: 9px;
+    padding: 4px 16px;
+}
 @media (min-width: 768px) {
     .dice-selector button, #flatout-button, #reset-button {
         font-size: 5vw;
         padding: 3vw 4vw;
         font-weight: bold;
+        min-width: 15vw;
+        flex: 1 1 15%;
+    }
+    #toggle-probabilities-btn {
+        font-size: 2vw;
+        padding: 1vw 2vw;
+        font-weight: normal;
         min-width: 15vw;
         flex: 1 1 15%;
     }
@@ -206,7 +218,6 @@ h1 span {
         font-size: 4vw;
     }
 }
-
 @media (min-width: 768px) {
     #remove-last-die-button {
         font-size: 5vw;
@@ -217,6 +228,12 @@ h1 span {
     }
 }
 
+.prob-value {
+    font-size: 2.5em;
+    font-family: 'DS-DIGI', monospace;
+    margin: 0.2em 0;
+    line-height: 1;
+}
 
 /* Dés spéciaux (Brake, Boost, Leader, Gaz) : texte plus petit */
 /* .die.red-die,
@@ -254,3 +271,8 @@ h1 span {
         padding: 1.5vw 2vw;
     }
 } */
+
+p {
+    margin: 0.3em 0;
+    line-height: 1.1;
+}

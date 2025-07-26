@@ -28,8 +28,7 @@
         <button class="orange-button" onclick="addDie('leader')">Leader</button>
         <button class="white-button" onclick="addDie('gaz')">Gaz</button>
     </div>
-
-    <div style="display: flex; align-items: center; justify-content: center; gap: 1em; margin-bottom: 1em;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1em; margin-bottom: 1em;margin-top: 1em;">
         <strong>Dice selected :</strong>
         <label style="font-weight: normal;">
             <input type="checkbox" id="sound-toggle" checked>
@@ -44,9 +43,20 @@
         <button id="reset-button" onclick="resetDice()">Reset 🔄</button>
     </div>
 
+    <div style="text-align:center; margin: 1em 0;">
+<button id="toggle-probabilities-btn" class="action-button" onclick="toggleProbabilities()">LOS probabilities</button>
+    </div>
+<div id="probabilities-section" style="display:none; text-align:center; margin-bottom:1em;">
+<div id="prob-1-danger" class="prob-value">1 ⚠️ : -- %</div>
+<div id="prob-2-danger" class="prob-value">2 ⚠️ : -- %</div>
+<div id="prob-3-danger" class="prob-value">3 ⚠️ : -- %</div>
+<div id="prob-4-danger" class="prob-value">4 ⚠️ : -- %</div>
+    </div>
+
     <script src="app.js"></script>
     <p><strong></strong></p>
     <p><strong>Dice roller by <a href="https://boardgamegeek.com/user/apiiii">dr.apiiii</a> for the games <a href="https://www.bouvier-international.com/index.php/rallyman">Rallyman GT & Rallyman Dirt</a> by JC. BOUVIER</strong></p>
+    <p>For any comment or remark, please contact me on <a href="https://boardgamegeek.com/geekmail/compose?touser=apiiii">BGG</a></p>
     <p>I'm not affiliated with JC. BOUVIER or BOUVIER INTERNATIONAL</p>
 </body>
 </html>
