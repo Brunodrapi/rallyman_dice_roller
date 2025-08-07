@@ -158,7 +158,7 @@ function renderDice() {
         if (displayValue === 'Brake') displayValue = 'BRK';
         else if (displayValue === 'Boost') displayValue = 'BST';
         else if (displayValue === 'Leader') displayValue = 'LDR';
-        else if (displayValue === 'Gaz') displayValue = 'CST';
+        else if (displayValue === 'Coast') displayValue = 'CST';
         // "Gaz" reste "Gaz" (ou "GAZ" si tu veux tout en majuscules)
 
         dieDiv.className = 'die';
