@@ -23,6 +23,22 @@ body {
     /* margin: 20px 0; */
 }
 
+/* --- Bounce animation when a die is rolled --- */
+@keyframes rollBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  70%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+.roll-bounce {
+  animation: rollBounce 180ms ease-out;
+}
+
+/* Respect “reduce motion” accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .roll-bounce { animation: none; }
+}
 
 .die {
     width: 60px;

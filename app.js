@@ -2,6 +2,17 @@
 const diceArea = document.getElementById('dice-area');
 const dice = [];
 
+
+let pendingBounce = null; // { mode: 'one', index } ou { mode: 'all' }
+
+function triggerBounce(el) {
+  if (!el) return;
+  el.classList.remove('roll-bounce');
+  // force reflow pour relancer l'animation même si on clique vite
+  void el.offsetWidth;
+  el.classList.add('roll-bounce');
+}
+
 // --- Probabilités /!\ ---
 function toggleProbabilities() {
     const section = document.getElementById('probabilities-section');
@@ -125,6 +136,13 @@ function playDiceSound() {
     });
 } */
 
+function vibrateOnRoll() {
+  // Vérifie que la vibration est supportée (Android, certains navigateurs)
+  if (navigator.vibrate) {
+    navigator.vibrate(40); // 40ms = court et agréable
+  }
+}
+
 function rollDie(die) {
     let result = '';
 
@@ -148,51 +166,68 @@ function rollDie(die) {
 }
 
 function renderDice() {
-    diceArea.innerHTML = '';
+  diceArea.innerHTML = '';
 
-    dice.forEach((die, index) => {
-        const dieDiv = document.createElement('div');
-        let displayValue = die.value;
+  dice.forEach((die, index) => {
+    const dieDiv = document.createElement('div');
+    let displayValue = die.value;
 
-        // Toujours abréger pour l'affichage dans les dés sélectionnés
-        if (displayValue === 'Brake') displayValue = 'BRK';
-        else if (displayValue === 'Boost') displayValue = 'BST';
-        else if (displayValue === 'Leader') displayValue = 'LDR';
-        else if (displayValue === 'Gaz') displayValue = 'CST';
-        // "Gaz" reste "Gaz" (ou "GAZ" si tu veux tout en majuscules)
+    // Toujours abréger pour l'affichage dans les dés sélectionnés
+    if (displayValue === 'Brake') displayValue = 'BRK';
+    else if (displayValue === 'Boost') displayValue = 'BST';
+    else if (displayValue === 'Leader') displayValue = 'LDR';
+    else if (displayValue === 'Gaz') displayValue = 'CST';
 
-        dieDiv.className = 'die';
-        dieDiv.innerText = displayValue;
+    dieDiv.className = 'die';
+    dieDiv.innerText = displayValue;
 
-        if (['1','2','3','4','5','6'].includes(die.type)) {
-            dieDiv.classList.add('black-die');
-            dieDiv.setAttribute('data-value', die.value);
-        } else if (die.type === 'frein') {
-            dieDiv.classList.add('red-die');
-        } else if (die.type === 'boost') {
-            dieDiv.classList.add('green-die');
-        } else if (die.type === 'gaz') {
-            dieDiv.classList.add('white-die');
-        } else if (die.type === 'leader') {
-            dieDiv.classList.add('orange-die');
-        }
+    if (['1','2','3','4','5','6'].includes(die.type)) {
+      dieDiv.classList.add('black-die');
+      // IMPORTANT: on met la valeur "1..6" uniquement pour la coloration,
+      // sinon si die.value vaut "⚠️" tu perds la couleur
+      dieDiv.setAttribute('data-value', die.type);
+    } else if (die.type === 'frein') {
+      dieDiv.classList.add('red-die');
+    } else if (die.type === 'boost') {
+      dieDiv.classList.add('green-die');
+    } else if (die.type === 'gaz') {
+      dieDiv.classList.add('white-die');
+    } else if (die.type === 'leader') {
+      dieDiv.classList.add('orange-die');
+    }
 
-        dieDiv.onclick = () => {
-            rollDie(die);
-            renderDice();
-            playDiceSound();
-            updateProbabilities();
-        };
-        diceArea.appendChild(dieDiv);
-        /* adjustDiceSize(); */
-    });
+    dieDiv.onclick = () => {
+      rollDie(die);
+      pendingBounce = { mode: 'one', index };
+      renderDice();
+      playDiceSound();
+      vibrateOnRoll();
+      updateProbabilities();
+    };
+
+    // ✅ LIGNE MANQUANTE : il faut ajouter le dé dans la page
+    diceArea.appendChild(dieDiv);
+  });
+
+  // ✅ Maintenant que les dés sont dans le DOM, on peut bouncer
+  const dieEls = diceArea.querySelectorAll('.die');
+
+  if (pendingBounce && pendingBounce.mode === 'one') {
+    triggerBounce(dieEls[pendingBounce.index]);
+  } else if (pendingBounce && pendingBounce.mode === 'all') {
+    dieEls.forEach(triggerBounce);
+  }
+
+  pendingBounce = null;
 }
 
 function rollAllDice() {
-    dice.forEach(rollDie);
-    renderDice();
-    playDiceSound();
-    updateProbabilities();
+  dice.forEach(rollDie);
+  pendingBounce = { mode: 'all' };
+  renderDice();
+  playDiceSound();
+  vibrateOnRoll();
+  updateProbabilities();
 }
 
 function resetDice() {
