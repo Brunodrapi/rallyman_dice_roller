@@ -106,11 +106,10 @@ function addDie(type) {
         if (isAutoShiftEnabled() && lastGearAdded !== null) {
             const diff = gear - lastGearAdded;
 
-            if (diff > 0) {
-                // Montée de vitesse : 1 boost si pas déjà présent
-                if (!dice.some(d => d.type === 'boost')) {
-                    dice.push(createDie('boost'));
-                }
+            if (diff > 1) {
+                // Saut de vitesse de 2+ : besoin d'un boost
+                if (dice.some(d => d.type === 'boost')) return; // Boost déjà présent → bloqué
+                dice.push(createDie('boost'));
             } else if (diff < -1) {
                 // Rétrogradage de plus de 1 : (|diff| - 1) freins
                 const brakesCount = Math.abs(diff) - 1;
@@ -126,6 +125,7 @@ function addDie(type) {
     dice.push(createDie(type));
     renderDice();
     updateProbabilities();
+    updateGearButtons();
 }
 
 const diceSound = new Audio('sounds/dice-roll.mp3');
@@ -263,6 +263,7 @@ function resetDice() {
     lastGearAdded = null;
     renderDice();
     updateProbabilities();
+    updateGearButtons();
 }
 
 // Enlève le dernier dé posé
@@ -274,5 +275,32 @@ function removeLastDie() {
         lastGearAdded = gearDice.length > 0 ? parseInt(gearDice[gearDice.length - 1].type) : null;
         renderDice();
         updateProbabilities();
+        updateGearButtons();
+    }
+}
+
+function updateGearButtons() {
+    const hasBoost = dice.some(d => d.type === 'boost');
+
+    for (let g = 1; g <= 6; g++) {
+        const btn = document.querySelector(`.black-button[data-value="${g}"]`);
+        if (!btn) continue;
+
+        // Dé déjà ajouté → désactivé
+        if (dice.some(d => d.type === String(g))) {
+            btn.disabled = true;
+            continue;
+        }
+
+        // Auto-shift actif : bloquer les sauts qui nécessiteraient un 2ème boost
+        if (isAutoShiftEnabled() && lastGearAdded !== null) {
+            const diff = g - lastGearAdded;
+            if (diff > 1 && hasBoost) {
+                btn.disabled = true;
+                continue;
+            }
+        }
+
+        btn.disabled = false;
     }
 }

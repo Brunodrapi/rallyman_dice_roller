@@ -274,6 +274,12 @@ h1 span {
     aspect-ratio: 1 / 1;
 }
 
+/* Bouton vitesse bloqué (dé déjà ajouté ou boost manquant) */
+.dice-selector button.black-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 /* Boutons Flat Out! et Reset plus gros et en gras */
 /* #flatout-button, #reset-button {
     font-weight: bold;
