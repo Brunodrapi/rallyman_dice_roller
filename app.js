@@ -2,8 +2,29 @@
 const diceArea = document.getElementById('dice-area');
 const dice = [];
 
-
 let pendingBounce = null; // { mode: 'one', index } ou { mode: 'all' }
+let lastGearAdded = null; // Last gear die added (integer 1-6), or null
+
+function isAutoShiftEnabled() {
+    const toggle = document.getElementById('auto-shift-toggle');
+    return toggle ? toggle.checked : false;
+}
+
+function createDie(type) {
+    const die = { type: type, value: '' };
+    if (['1','2','3','4','5','6'].includes(type)) {
+        die.value = type;
+    } else {
+        switch (type) {
+            case 'frein':  die.value = 'Brake';  break;
+            case 'boost':  die.value = 'Boost';  break;
+            case 'leader': die.value = 'Leader'; break;
+            case 'gaz':    die.value = 'Gaz';    break;
+            default:       die.value = '?';
+        }
+    }
+    return die;
+}
 
 function triggerBounce(el) {
   if (!el) return;
@@ -75,27 +96,34 @@ function updateProbabilities() {
 }
 
 function addDie(type) {
-    if (['1','2','3','4','5','6'].includes(type)) {
-        if (dice.some(d => d.type === type)) {
-            return; // Déjà ajouté
+    const gearTypes = ['1','2','3','4','5','6'];
+
+    if (gearTypes.includes(type)) {
+        if (dice.some(d => d.type === type)) return; // Déjà ajouté
+
+        const gear = parseInt(type);
+
+        if (isAutoShiftEnabled() && lastGearAdded !== null) {
+            const diff = gear - lastGearAdded;
+
+            if (diff > 0) {
+                // Montée de vitesse : 1 boost si pas déjà présent
+                if (!dice.some(d => d.type === 'boost')) {
+                    dice.push(createDie('boost'));
+                }
+            } else if (diff < -1) {
+                // Rétrogradage de plus de 1 : (|diff| - 1) freins
+                const brakesCount = Math.abs(diff) - 1;
+                for (let i = 0; i < brakesCount; i++) {
+                    dice.push(createDie('frein'));
+                }
+            }
         }
+
+        lastGearAdded = gear;
     }
 
-    const die = { type: type, value: '' };
-
-    if (['1','2','3','4','5','6'].includes(type)) {
-        die.value = type;
-    } else {
-        switch(type) {
-            case 'frein': die.value = 'Brake'; break;
-            case 'boost': die.value = 'Boost'; break;
-            case 'leader': die.value = 'Leader'; break;
-            case 'gaz': die.value = 'Gaz'; break;
-            default: die.value = '?';
-        }
-    }
-
-    dice.push(die);
+    dice.push(createDie(type));
     renderDice();
     updateProbabilities();
 }
@@ -232,6 +260,7 @@ function rollAllDice() {
 
 function resetDice() {
     dice.length = 0;
+    lastGearAdded = null;
     renderDice();
     updateProbabilities();
 }
@@ -240,6 +269,9 @@ function resetDice() {
 function removeLastDie() {
     if (dice.length > 0) {
         dice.pop();
+        // Recalcule lastGearAdded d'après les dés vitesse restants
+        const gearDice = dice.filter(d => ['1','2','3','4','5','6'].includes(d.type));
+        lastGearAdded = gearDice.length > 0 ? parseInt(gearDice[gearDice.length - 1].type) : null;
         renderDice();
         updateProbabilities();
     }
