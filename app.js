@@ -46,8 +46,8 @@ function updateProbabilities() {
     // Récupère la liste des dés sélectionnés
     // Pour chaque dé, on détermine la proba d'obtenir /!\
     const dangerProbs = dice.map(die => {
-        if (['1','2','3'].includes(die.type)) return 1/6;
-        if (['4','5','6'].includes(die.type)) return 2/6;
+        if (['1','2'].includes(die.type)) return 1/6;
+        if (['3','4','5','6'].includes(die.type)) return 2/6;
         if (die.type === 'gaz' || die.type === 'boost') return 1/6;
         if (die.type === 'frein' || die.type === 'leader') return 2/6;
         return 0;
@@ -174,10 +174,10 @@ function vibrateOnRoll() {
 function rollDie(die) {
     let result = '';
 
-    if (['1','2','3'].includes(die.type)) {
+    if (['1','2'].includes(die.type)) {
         const faces = [die.type, die.type, die.type, die.type, die.type, '⚠️'];
         result = faces[Math.floor(Math.random() * 6)];
-    } else if (['4','5','6'].includes(die.type)) {
+    } else if (['3','4','5','6'].includes(die.type)) {
         const faces = [die.type, die.type, die.type, die.type, '⚠️', '⚠️'];
         result = faces[Math.floor(Math.random() * 6)];
     } else if (die.type === 'gaz' || die.type === 'boost') {
